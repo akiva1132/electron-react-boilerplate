@@ -1,6 +1,15 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route, RouterProvider } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
-import './App.css';
+import { StrictMode } from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { ApolloProvider } from '@apollo/client';
+import { apoloClient } from './apolloClient';
+// import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+import { store } from './redux/store'
+import { Provider } from 'react-redux'
+
+import './styles.css'
 
 function Hello() {
   return (
@@ -38,13 +47,27 @@ function Hello() {
     </div>
   );
 }
+{/* <RouterProvider router={router} /> */}
 
 export default function App() {
+console.log("akiva1");
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
+    // <Router>
+    //   <Routes>
+    //     <Route path="/" element={<Hello />} />
+    //   </Routes>
+    // </Router>
+    
+    <StrictMode>
+    <Provider store={store}>
+      <ApolloProvider client={apoloClient}>
+        {/* <div>
+          {window.location.href}
+        </div> */}
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </Provider>
+  </StrictMode>
   );
 }
